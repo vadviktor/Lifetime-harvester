@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: somedb
+  pool: 5
+  host: somehost
+  port: 5432
+  username: user
+  password: pass

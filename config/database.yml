@@ -1,0 +1,9 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: lifetime_harvester
+  pool: 5
+  host: 1204.vm.solarwind.ikon
+  port: 5432
+  username: ikon
+  password: force
