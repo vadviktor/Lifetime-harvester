@@ -15,5 +15,4 @@
 //= require jquery-migrate-1_0_0
 //= require twitter/bootstrap/transition
 //= require bootstrap-inputmask
-//= require ruby
 //= require task

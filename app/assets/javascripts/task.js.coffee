@@ -10,13 +10,13 @@ $ ->
     form = $(this)
 
     errors = false
-    description = R(form.find("input[name='description']").val())
-    if description.empty()
+    description = form.find("input[name='description']").val()
+    if not description? or description == ''
       $('#description-control-group').addClass('error')
       errors = true
 
-    time = R(form.find("input[name='time']").val())
-    if time.empty()
+    time = form.find("input[name='time']").val()
+    if not time? or time == ''
       $('#time-control-group').addClass('error')
       errors = true
 
