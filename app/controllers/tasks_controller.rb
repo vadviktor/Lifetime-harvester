@@ -1,4 +1,7 @@
 class TasksController < ApplicationController
+
+  before_filter :find_task, :except => [:create, :index]
+
   def index
     @tasks = Task.all
   end
@@ -11,9 +14,9 @@ class TasksController < ApplicationController
     @task.started = Time.now
 
     if @task.save
-      redirect_to root_path, :success => 'Harvest begun and in progress'
+      redirect_to root_path, :success => 'Harvester on rampage'
     else
-      redirect_to root_path, :error => 'Cannot start the harvest with these parameters'
+      redirect_to root_path, :error => 'You are not the beholder of true names'
     end
   end
 
@@ -21,9 +24,8 @@ class TasksController < ApplicationController
   end
 
   def destroy
-    @task = Task.find params[:id]
     if @task.destroy
-      redirect_to root_path, :success => 'A harvester has been vanquished, cherish your newly gained moments'
+      redirect_to root_path, :success => 'The harvester has been vanquished, cherish your newly gained moments'
     else
       redirect_to root_path, :error => 'The harvester could not be destroyed, try harder'
     end
@@ -33,10 +35,28 @@ class TasksController < ApplicationController
   end
 
   def pause
-
+    @task.finished = Time.now
+    @task.time_spent += (@task.finished - @task.started).to_i
+    if @task.save
+      redirect_to root_path, :success => 'Harvester is taking a rest, you should do as well'
+    else
+      redirect_to root_path, :error => 'Harvester cannot be stopped, this method backfired'
+    end
   end
 
   def continue
+    @task.finished = nil
+    @task.started = Time.now
+    if @task.save
+      redirect_to root_path, :success => 'Harvester got loose again'
+    else
+      redirect_to root_path, :error => 'You are not the beholder of true names'
+    end
+  end
 
+private
+
+  def find_task
+    @task = Task.find params[:id]
   end
 end

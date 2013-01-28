@@ -1,15 +1,15 @@
 %li.span4
   .thumbnail
-    - if task.counting?
-      .label.label-info Counting
+    - if task.harvesting?
+      .label.label-info Harvesting
     - else
-      .label.label-warning Paused
+      .label.label-warning Resting
     .task-description= task.description
-    .task-time 01:21:34
+    .task-time{ :class => "#{'harvesting' if task.harvesting?}" }= task.current_timer
     %div
-      - if task.counting?
-        = link_to content_tag(:i, '', :class => 'icon-pause icon-white') + 'Pause', pause_task_path(task), :class => 'btn btn-primary'
+      - if task.harvesting?
+        = link_to content_tag(:i, '', :class => 'icon-pause icon-white') + 'Rest', pause_task_path(task), :class => 'btn btn-primary'
       - else
-        = link_to content_tag(:i, '', :class => 'icon-play icon-white') + 'Start', continue_task_path(task), :class => 'btn btn-primary'
-      = link_to content_tag(:i, '', :class => 'icon-pencil') + 'Edit', edit_task_path(task), :class => 'btn'
-      = link_to content_tag(:i, '', :class => 'icon-trash') + 'Trash', task_path(task), :method => :delete, :confirm => 'Do you dare?', :class => 'btn'
+        = link_to content_tag(:i, '', :class => 'icon-play icon-white') + 'Harvest', continue_task_path(task), :class => 'btn btn-primary'
+      = link_to content_tag(:i, '', :class => 'icon-pencil') + 'Modify', edit_task_path(task), :class => 'btn'
+      = link_to content_tag(:i, '', :class => 'icon-trash') + 'Banish', task_path(task), :method => :delete, :confirm => 'Do you dare?', :class => 'btn'

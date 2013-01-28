@@ -39,6 +39,7 @@ gem 'jquery-rails'
 # To use debugger
 
 group :development do
+  gem 'sqlite3'
   gem 'debugger'
   gem 'thin'
 end

@@ -6,7 +6,6 @@ $ ->
     $('#time-control-group').removeClass('error')
 
   $("#start_harvest_form").submit (event) ->
-
     form = $(this)
 
     errors = false
@@ -23,3 +22,7 @@ $ ->
     if errors
       event.preventDefault()
       return false
+
+#  setTimeout(->
+#
+#  , 1000)
