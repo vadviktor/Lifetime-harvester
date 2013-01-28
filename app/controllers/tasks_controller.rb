@@ -22,6 +22,8 @@ class TasksController < ApplicationController
   end
 
   def edit
+    @task.finished = Time.now
+    @task.time_spent += (@task.finished - @task.started).to_i
   end
 
   def update
