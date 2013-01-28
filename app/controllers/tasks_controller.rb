@@ -4,6 +4,7 @@ class TasksController < ApplicationController
 
   def index
     @tasks = Task.all
+    gon.harvest_in_progress = true if @tasks.detect {|t| t.harvesting? }
   end
 
   def create
@@ -20,6 +21,9 @@ class TasksController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
   end
 
@@ -29,9 +33,6 @@ class TasksController < ApplicationController
     else
       redirect_to root_path, :error => 'The harvester could not be destroyed, try harder'
     end
-  end
-
-  def edit
   end
 
   def pause

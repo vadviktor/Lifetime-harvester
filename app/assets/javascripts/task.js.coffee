@@ -1,4 +1,7 @@
 $ ->
+  if gon.harvest_in_progress?
+    $('#favicon').attr('href', '/faviconplay.ico')
+
   $("#start_harvest_form input[name='description']").keydown ->
     $('#description-control-group').removeClass('error')
 

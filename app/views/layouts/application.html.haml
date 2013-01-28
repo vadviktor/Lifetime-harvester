@@ -6,6 +6,7 @@
     %title Lifetime Harvester
     %link#favicon{ :rel => "icon", :href => "/favicon.ico" }
     = stylesheet_link_tag "application", :media => "all"
+    = include_gon(:init => true, :need_type => true)
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body

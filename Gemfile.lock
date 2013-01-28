@@ -55,6 +55,9 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     fastthread (1.0.7)
+    gon (4.0.2)
+      actionpack (>= 2.3.0)
+      json
     haml (3.1.7)
     hike (1.2.1)
     i18n (0.6.1)
@@ -133,6 +136,7 @@ DEPENDENCIES
   anjlab-bootstrap-rails (>= 2.2)
   coffee-rails (~> 3.2.1)
   debugger
+  gon
   haml
   jquery-rails
   passenger
