@@ -3,8 +3,7 @@ class TasksController < ApplicationController
   before_filter :find_task, :except => [:create, :index]
 
   def index
-    @tasks = Task.all
-    gon.harvest_in_progress = true if @tasks.detect {|t| t.harvesting? }
+    default_listing
   end
 
   def create
@@ -24,6 +23,7 @@ class TasksController < ApplicationController
   def edit
     @task.finished = Time.now
     @task.time_spent += (@task.finished - @task.started).to_i
+    default_listing
   end
 
   def update
@@ -58,6 +58,11 @@ class TasksController < ApplicationController
   end
 
 private
+
+  def default_listing
+    @tasks = Task.all
+    gon.harvest_in_progress = true if @tasks.detect {|t| t.harvesting? }
+  end
 
   def find_task
     @task = Task.find params[:id]
