@@ -3,14 +3,14 @@ class TasksController < ApplicationController
   before_filter :find_task, :except => [:create, :index]
 
   def index
-    default_listing
+    @tasks = Task.order(:description).all
+    gon.harvest_in_progress = true if @tasks.detect {|t| t.harvesting? }
   end
 
   def create
     @task = Task.new
     @task.description = params[:description]
-    time_parts = params[:time].split(':')
-    @task.time_spent = (time_parts[0].to_i * 60 * 60) + (time_parts[1].to_i * 60) + time_parts[2].to_i
+    @task.time_spent = timer_to_seconds params[:time]
     @task.started = Time.now
 
     if @task.save
@@ -21,12 +21,22 @@ class TasksController < ApplicationController
   end
 
   def edit
-    @task.finished = Time.now
-    @task.time_spent += (@task.finished - @task.started).to_i
-    default_listing
+    # if still harvesting then we have to stop it there
+    if @task.finished.blank?
+      @task.finished = Time.now
+      @task.time_spent += (@task.finished - @task.started).to_i
+    end
   end
 
   def update
+    @task.description = params[:task][:description]
+    @task.time_spent = timer_to_seconds params[:task][:time_spent]
+
+    if @task.save
+      redirect_to root_path, :success => 'Harvester ritual has changed, be prepared!'
+    else
+      redirect_to root_path, :error => 'You are not the beholder of true names'
+    end
   end
 
   def destroy
@@ -59,9 +69,9 @@ class TasksController < ApplicationController
 
 private
 
-  def default_listing
-    @tasks = Task.all
-    gon.harvest_in_progress = true if @tasks.detect {|t| t.harvesting? }
+  def timer_to_seconds timer
+    time_parts = timer.split(':')
+    (time_parts[0].to_i * 60 * 60) + (time_parts[1].to_i * 60) + time_parts[2].to_i
   end
 
   def find_task

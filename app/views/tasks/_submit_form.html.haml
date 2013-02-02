@@ -1,0 +1,17 @@
+.row
+  .span12
+    = form_tag tasks_path, :method => :post, :class => 'form-inline', :id => 'start_harvest_form' do
+      %span#description-control-group.control-group
+        .input-prepend
+          %span.add-on
+            %i.icon-wrench
+          = text_field_tag 'task[description]', nil, {:class => 'span8', :placeholder => 'Description'}
+      %span#time_spent-control-group.control-group
+        .input-prepend
+          %span.add-on
+            %i.icon-time
+          = text_field_tag 'task[time_spent]', '00:00:00', {:class => 'span2 inputmask', 'data-mask' => '99:99:99'}
+      %span
+        %button.btn.btn-primary{ :type => 'submit' }
+          %i.icon-play-circle.icon-white
+          Start harversting
