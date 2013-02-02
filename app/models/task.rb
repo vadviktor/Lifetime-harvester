@@ -6,10 +6,14 @@ class Task < ActiveRecord::Base
   end
 
   def current_timer
-    seconds = time_spent % 60
-    minutes = (time_spent / 60) % 60
-    hours = time_spent / (60 * 60)
+    if harvesting?
+      self.time_spent += Time.now - started
+    end
 
-    format("%02d:%02d:%02d", hours, minutes, seconds) #=> "01:00:00"
+    hours = self.time_spent / 3600
+    minutes = (self.time_spent - (hours * 3600)) / 60
+    seconds = self.time_spent - (hours * 3600) - (minutes * 60)
+
+    format("%02d:%02d:%02d", hours.floor, minutes.floor, seconds.round) #=> "01:00:00"
   end
 end

@@ -9,8 +9,8 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new
-    @task.description = params[:description]
-    @task.time_spent = timer_to_seconds params[:time]
+    @task.description = params[:task][:description]
+    @task.time_spent = timer_to_seconds params[:task][:time_spent]
     @task.started = Time.now
 
     if @task.save
@@ -58,8 +58,8 @@ class TasksController < ApplicationController
   end
 
   def continue
-    @task.finished = nil
     @task.started = Time.now
+    @task.finished = nil
     if @task.save
       redirect_to root_path, :success => 'Harvester got loose again'
     else
