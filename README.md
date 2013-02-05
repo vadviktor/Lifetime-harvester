@@ -6,6 +6,7 @@ This is a personal time tracker, a tool to measure spent time on multiple tasks.
 TODO
 ----
 
+* Add timer reset button
 * Omniauth logins to be more useful as a public service
 * summarize active hours
 * task groups
