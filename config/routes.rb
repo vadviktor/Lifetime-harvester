@@ -3,6 +3,7 @@ LifetimeHarvester::Application.routes.draw do
   resources :tasks, :except => :new do
     member do
       get 'pause'
+      get 'reset'
       get 'continue'
     end
   end

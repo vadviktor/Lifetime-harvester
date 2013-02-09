@@ -2,7 +2,7 @@ class Task < ActiveRecord::Base
   attr_accessible :description, :time_spent
 
   def harvesting?
-    finished.blank? ? true : false
+    started.present? and finished.blank? ? true : false
   end
 
   def current_timer

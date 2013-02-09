@@ -57,6 +57,17 @@ class TasksController < ApplicationController
     end
   end
 
+  def reset
+    @task.finished = nil
+    @task.started = nil
+    @task.time_spent = 0
+    if @task.save
+      redirect_to root_path, :success => 'Harvester is taking a rest, you should do as well'
+    else
+      redirect_to root_path, :error => 'Harvester cannot be stopped, this method backfired'
+    end
+  end
+
   def continue
     @task.started = Time.now
     @task.finished = nil
