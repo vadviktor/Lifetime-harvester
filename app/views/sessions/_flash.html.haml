@@ -1,0 +1,16 @@
+- max_size = 50
+
+- if flash[:success]
+  - message = flash[:success]
+  .alert.alert-success{ :class => "#{'alert-block' if flash[:success].size > max_size}"}
+    %button{ :type => :button, :class => :close, 'data-dismiss' => :alert }x
+    %h4= "Glory!"
+    != flash_this message
+
+- if flash[:error]
+  - message = flash[:error]
+  .alert.alert-error{ :class => "#{'alert-block' if flash[:error].size > max_size}"}
+    %button{ :type => :button, :class => :close, 'data-dismiss' => :alert }x
+    %h4= "Defeat!"
+    != flash_this message
+

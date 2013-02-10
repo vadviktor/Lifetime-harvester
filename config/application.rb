@@ -15,6 +15,11 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+# application.yml configs
+LH_CONFIG = YAML.load(File.read(File.expand_path('../application.yml', __FILE__)))
+LH_CONFIG.merge! LH_CONFIG.fetch(Rails.env, {})
+LH_CONFIG.symbolize_keys!
+
 module LifetimeHarvester
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -64,5 +69,12 @@ module LifetimeHarvester
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Use Closure as default JS compressor
+    config.assets.js_compressor = Closure::Compiler.new(
+        :compilation_level => 'SIMPLE_OPTIMIZATIONS',
+        :java => LH_CONFIG[:java_path]
+    )
+
   end
 end

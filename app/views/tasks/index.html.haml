@@ -1,10 +1,26 @@
-= render :partial => 'tasks/submit_form'
-
-- if @tasks.present?
-  - @tasks.each_slice(3) do |task_row|
-    .row
-      %ul.thumbnails
-        - task_row.each do |task|
-          = render :partial => 'tasks/task', :locals => {:task => task}
+- unless current_user
+  %a{:href => "https://github.com/vadviktor/Lifetime-harvester"}
+    %img{:alt => "Fork me on GitHub", :src => "https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png", :style => "position: absolute; top: 0; right: 0; border: 0;"}
+  .row
+    .span4.offset4
+      %h1 Lifetime Harvester
+      %p.lead Tracking time you spend on tasks.
+  .row
+    %p
+      .span2.offset4=link_to image_tag('social/github.png'), '/auth/github'
+      .span2=link_to image_tag('social/google.png'), '/auth/google_oauth2'
+  .row
+    %p
+      .span2.offset4=link_to image_tag('social/facebook.png'), '/auth/facebook'
+      .span2=link_to image_tag('social/twitter.png'), '/auth/twitter'
 - else
-  .well No harvesters in this realm. Your life is spared, use it well!
+  = render :partial => 'tasks/submit_form'
+
+  - if @tasks.present?
+    - @tasks.each_slice(3) do |task_row|
+      .row
+        %ul.thumbnails
+          - task_row.each do |task|
+            = render :partial => 'tasks/task', :locals => {:task => task}
+  - else
+    .well No harvesters in this realm. Your life is spared, use it well!

@@ -3,20 +3,25 @@ class TasksController < ApplicationController
   before_filter :find_task, :except => [:create, :index]
 
   def index
-    @tasks = Task.order(:description).all
-    gon.harvest_in_progress = true if @tasks.detect {|t| t.harvesting? }
+    if current_user
+      @tasks = current_user.tasks.order(:description).all
+      gon.harvest_in_progress = true if @tasks.detect { |t| t.harvesting? }
+    end
   end
 
   def create
     @task = Task.new
+    @task.user = current_user
     @task.description = params[:task][:description]
     @task.time_spent = timer_to_seconds params[:task][:time_spent]
     @task.started = Time.now
 
     if @task.save
-      redirect_to root_path, :success => 'Harvester on rampage'
+      flash[:success] = 'Harvester on rampage'
+      redirect_to root_path
     else
-      redirect_to root_path, :error => 'You are not the beholder of true names'
+      flash.now[:error] = 'You are not the beholder of true names'
+      redirect_to root_path
     end
   end
 
@@ -33,17 +38,21 @@ class TasksController < ApplicationController
     @task.time_spent = timer_to_seconds params[:task][:time_spent]
 
     if @task.save
-      redirect_to root_path, :success => 'Harvester ritual has changed, be prepared!'
+      flash[:success] = 'Harvester ritual has changed, be prepared!'
+      redirect_to root_path
     else
-      redirect_to root_path, :error => 'You are not the beholder of true names'
+      flash.now[:error] = 'You are not the beholder of true names'
+      redirect_to root_path
     end
   end
 
   def destroy
     if @task.destroy
-      redirect_to root_path, :success => 'The harvester has been vanquished, cherish your newly gained moments'
+      flash[:success] = 'The harvester has been vanquished, cherish your newly gained moments'
+      redirect_to root_path
     else
-      redirect_to root_path, :error => 'The harvester could not be destroyed, try harder'
+      flash.now[:error] = 'The harvester could not be destroyed, try harder'
+      redirect_to root_path
     end
   end
 
@@ -51,9 +60,11 @@ class TasksController < ApplicationController
     @task.finished = Time.now
     @task.time_spent += (@task.finished - @task.started).to_i
     if @task.save
-      redirect_to root_path, :success => 'Harvester is taking a rest, you should do as well'
+      flash[:success] = 'Harvester is taking a rest, you should do as well'
+      redirect_to root_path
     else
-      redirect_to root_path, :error => 'Harvester cannot be stopped, this method backfired'
+      flash.now[:error] = 'Harvester cannot be stopped, this method backfired'
+      redirect_to root_path
     end
   end
 
@@ -62,9 +73,11 @@ class TasksController < ApplicationController
     @task.started = nil
     @task.time_spent = 0
     if @task.save
-      redirect_to root_path, :success => 'Harvester is taking a rest, you should do as well'
+      flash[:success] = 'Harvester is taking a rest, you should do as well'
+      redirect_to root_path
     else
-      redirect_to root_path, :error => 'Harvester cannot be stopped, this method backfired'
+      flash.now[:error] = 'Harvester cannot be stopped, this method backfired'
+      redirect_to root_path
     end
   end
 
@@ -72,13 +85,15 @@ class TasksController < ApplicationController
     @task.started = Time.now
     @task.finished = nil
     if @task.save
-      redirect_to root_path, :success => 'Harvester got loose again'
+      flash[:success] = 'Harvester got loose again'
+      redirect_to root_path
     else
-      redirect_to root_path, :error => 'You are not the beholder of true names'
+      flash.now[:error] = 'You are not the beholder of true names'
+      redirect_to root_path
     end
   end
 
-private
+  private
 
   def timer_to_seconds timer
     time_parts = timer.split(':')

@@ -1,6 +1,8 @@
 class Task < ActiveRecord::Base
   attr_accessible :description, :time_spent
 
+  belongs_to :user
+
   def harvesting?
     started.present? and finished.blank? ? true : false
   end

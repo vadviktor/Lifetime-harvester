@@ -10,4 +10,9 @@
     = javascript_include_tag "application"
     = csrf_meta_tags
   %body
-    .container= yield
+    .container
+      .row
+        %p
+          .span2= render :partial => 'sessions/user_menu'
+          .span10= render :partial => 'sessions/flash', :locals => {:flash => flash}
+      = yield
