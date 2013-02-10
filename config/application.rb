@@ -70,11 +70,9 @@ module LifetimeHarvester
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-    # Use Closure as default JS compressor
-    config.assets.js_compressor = Closure::Compiler.new(
-        :compilation_level => 'SIMPLE_OPTIMIZATIONS',
-        :java => LH_CONFIG[:java_path]
-    )
+    config.assets.js_compressor = :uglifier
+
+    config.assets.css_compressor = :yui
 
   end
 end

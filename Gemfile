@@ -17,7 +17,8 @@ group :assets do
   gem 'sass-rails', '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
   gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
-  gem 'closure-compiler'
+  gem 'uglifier'
+  gem 'yui-compressor'
 end
 
 group :development do
