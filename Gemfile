@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
+gem 'rails', '3.2.12'
 gem 'passenger'
 gem 'pg'
 gem 'haml'
@@ -28,4 +28,9 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
+end
+
+group :test do
+  gem 'minitest'
+  gem 'minitest-reporters'
 end
