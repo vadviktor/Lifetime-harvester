@@ -27,9 +27,10 @@ class TasksController < ApplicationController
 
   def edit
     # if still harvesting then we have to stop it there
-    if @task.finished.blank?
+    if @task.finished.blank? and @task.started.present?
       @task.finished = Time.now
       @task.time_spent += (@task.finished - @task.started).to_i
+      @task.save
     end
   end
 
