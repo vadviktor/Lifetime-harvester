@@ -12,9 +12,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new
     @task.user = current_user
-    @task.description = params[:task][:description]
-    @task.time_spent = timer_to_seconds params[:task][:time_spent]
-    @task.started = Time.now
+    @task.started = Time.now - timer_to_seconds(params[:task][:time_spent])
 
     if @task.save
       flash[:success] = 'Harvester on rampage'
@@ -29,14 +27,14 @@ class TasksController < ApplicationController
     # if still harvesting then we have to stop it there
     if @task.finished.blank? and @task.started.present?
       @task.finished = Time.now
-      @task.time_spent += (@task.finished - @task.started).to_i
       @task.save
     end
   end
 
   def update
     @task.description = params[:task][:description]
-    @task.time_spent = timer_to_seconds params[:task][:time_spent]
+    @task.finished = Time.now
+    @task.started = @task.finished - timer_to_seconds(params[:task][:time_spent])
 
     if @task.save
       flash[:success] = 'Harvester ritual has changed, be prepared!'
@@ -59,7 +57,6 @@ class TasksController < ApplicationController
 
   def pause
     @task.finished = Time.now
-    @task.time_spent += (@task.finished - @task.started).to_i
     if @task.save
       flash[:success] = 'Harvester is taking a rest, you should do as well'
       redirect_to root_path
@@ -72,7 +69,6 @@ class TasksController < ApplicationController
   def reset
     @task.finished = nil
     @task.started = nil
-    @task.time_spent = 0
     if @task.save
       flash[:success] = 'Harvester is taking a rest, you should do as well'
       redirect_to root_path
@@ -83,7 +79,7 @@ class TasksController < ApplicationController
   end
 
   def continue
-    @task.started = Time.now
+    @task.started = Time.now - (@task.finished - @task.started).to_i
     @task.finished = nil
     if @task.save
       flash[:success] = 'Harvester got loose again'
@@ -96,7 +92,7 @@ class TasksController < ApplicationController
 
   private
 
-  def timer_to_seconds timer
+  def timer_to_seconds(timer)
     time_parts = timer.split(':')
     (time_parts[0].to_i * 60 * 60) + (time_parts[1].to_i * 60) + time_parts[2].to_i
   end

@@ -12,8 +12,5 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-migrate-1_0_0
-//= require twitter/bootstrap/alert
-//= require twitter/bootstrap/dropdown
-//= require bootstrap-inputmask
+//= require bootstrap
 //= require task

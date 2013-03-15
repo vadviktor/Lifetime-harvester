@@ -1,4 +1,5 @@
 $ ->
+# submit form
   if gon.harvest_in_progress?
     $('#favicon').attr('href', '/faviconplay.ico')
 
@@ -27,23 +28,22 @@ $ ->
       event.preventDefault()
       return false
 
-  t = setInterval(->
-    for task_time in $('.task-time')
+# clock
+  setInterval(->
+    for task_time in $('.task-time.harvesting')
       do (task_time) ->
-        if $(task_time).data('harvesting') is 1
-          time_spent = parseInt $(task_time).attr('data-time_spent')
-          time_spent = time_spent + 1
-          $(task_time).attr('data-time_spent', time_spent)
+        time_started = new Date(parseInt($(task_time).attr('data-started')))
+        time_now = new Date()
+        time_to_display = new Date()
+        time_to_display.setTime(time_now - time_started)
 
-          hours   = Math.floor(time_spent / 3600)
-          hours = "0#{hours}" if hours < 10
+        hours = time_to_display.getUTCHours()
+        hours = "0#{hours}" if hours < 10
+        minutes = time_to_display.getUTCMinutes()
+        minutes = "0#{minutes}" if minutes < 10
+        seconds = time_to_display.getUTCSeconds()
+        seconds = "0#{seconds}" if seconds < 10
 
-          minutes = Math.floor((time_spent - (hours * 3600)) / 60)
-          minutes = "0#{minutes}" if minutes < 10
-
-          seconds = Math.round(time_spent - (hours * 3600) - (minutes * 60))
-          seconds = "0#{seconds}" if seconds < 10
-
-          $(task_time).html "#{hours}:#{minutes}:#{seconds}"
+        ret = "#{hours}:#{minutes}:#{seconds}"
+        $(task_time).html(ret)
   , 1000)
-

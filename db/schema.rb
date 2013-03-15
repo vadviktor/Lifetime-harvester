@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130209143451) do
+ActiveRecord::Schema.define(:version => 20130315163558) do
 
   create_table "sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -25,7 +25,6 @@ ActiveRecord::Schema.define(:version => 20130209143451) do
 
   create_table "tasks", :force => true do |t|
     t.string   "description"
-    t.integer  "time_spent"
     t.datetime "started"
     t.datetime "finished"
     t.datetime "created_at",  :null => false
