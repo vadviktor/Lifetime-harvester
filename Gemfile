@@ -14,16 +14,16 @@ gem 'jquery-rails'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails', '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  gem 'anjlab-bootstrap-rails', '>= 2.2', :require => 'bootstrap-rails'
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'anjlab-bootstrap-rails', '>= 2.3', :require => 'bootstrap-rails'
   gem 'uglifier'
   gem 'yui-compressor'
 end
 
 group :development do
   gem 'sqlite3'
-  gem 'debugger'
+  #gem 'debugger'
   gem 'thin'
   gem 'better_errors'
   gem 'binding_of_caller'
