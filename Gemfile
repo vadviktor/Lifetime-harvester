@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem 'puma'
+gem 'passenger', '4.0.0.rc4'
 gem 'pg'
 gem 'haml'
 gem 'gon'
