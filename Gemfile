@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem 'thin'
+gem 'puma'
 gem 'pg'
 gem 'haml'
 gem 'gon'
