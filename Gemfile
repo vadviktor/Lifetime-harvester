@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.12'
-gem 'passenger'
+gem 'thin'
 gem 'pg'
 gem 'haml'
 gem 'gon'
@@ -21,7 +21,6 @@ end
 group :development do
   gem 'sqlite3'
   #gem 'debugger'
-  gem 'thin'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
