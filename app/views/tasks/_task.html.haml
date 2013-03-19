@@ -5,7 +5,7 @@
     - else
       .label.label-inverse Resting
     .task-description= task.description
-    .task-time{ 'data-started' => "#{task.started.to_i * 1000}", :class => "#{'harvesting' if task.harvesting?}" }= task.current_timer[:diff]
+    .task-time{ 'data-started' => "#{(task.started.to_i * 1000) if task.harvesting?}", :class => "#{'harvesting' if task.harvesting?}" }= task.current_timer[:diff]
     %div
       - if task.harvesting?
         = link_to content_tag(:i, '', :class => 'icon-pause icon-white') + 'Rest', pause_task_path(task), :class => 'btn btn-primary'

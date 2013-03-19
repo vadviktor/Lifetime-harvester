@@ -3,11 +3,15 @@ class Task < ActiveRecord::Base
 
   belongs_to :user
 
+  validates :description, presence: true, length: {minimum: 1}
+
   def harvesting?
     started.present? and finished.blank? ? true : false
   end
 
   def current_timer
+    return Time.diff(Time.now, Time.now) if started.nil? and finished.nil?
+
     if harvesting?
       Time.diff(started, Time.now, '%h:%m:%s')
     else

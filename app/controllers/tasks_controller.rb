@@ -12,6 +12,7 @@ class TasksController < ApplicationController
   def create
     @task = Task.new
     @task.user = current_user
+    @task.description = params[:task][:description]
     @task.started = Time.now - timer_to_seconds(params[:task][:time_spent])
 
     if @task.save
