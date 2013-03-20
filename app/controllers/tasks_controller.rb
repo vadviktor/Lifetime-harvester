@@ -80,7 +80,11 @@ class TasksController < ApplicationController
   end
 
   def continue
-    @task.started = Time.now - (@task.finished - @task.started).to_i
+    if not @task.finished.nil? and not @task.started.nil?
+      @task.started = Time.now - (@task.finished - @task.started).to_i
+    else
+      @task.started = Time.now
+    end
     @task.finished = nil
     if @task.save
       flash[:success] = 'Harvester got loose again'
