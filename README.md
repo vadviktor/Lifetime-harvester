@@ -8,3 +8,8 @@ TODO
 
 * summarize active hours
 * task groups
+
+KNOWN BUGS
+----------
+
+* Server side and client side clocks are never 100% in sync, some dozen of seconds diff could be experienced (working on a fix)
